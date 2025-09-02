@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JurisRAG</title>
+    <!-- Link to external stylesheet -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+       
+        <h1>📘 JurisRAG : AI powered legal assistant</h1>
+
+        <!-- Chat form: query + optional PDF upload -->
+        <form id="chatForm">
+            <!-- User query input -->
+            <label for="query">Enter your query:</label>
+            <textarea id="query" name="query" rows="4" required></textarea>
+
+            <!-- PDF file upload input -->
+            <label for="pdf">Upload PDF (optional):</label>
+            <input type="file" id="pdf" name="pdf" accept="application/pdf">
+
+            <!-- Submit button -->
+            <button type="submit">Ask</button>
+        </form>
+
+        <!-- Response box -->
+        <div id="responseBox">
+            <h2>Answer:</h2>
+            <p id="answerText">Answer is cooking.....</p>
+        </div>
+    </div>
+
+    <script>
+        // Attach event listener to form submission
+        document.getElementById("chatForm").addEventListener("submit", async function (e) {
+            e.preventDefault(); // Prevent default form reload
+
+            // Create FormData object to send text + file
+            const formData = new FormData();
+            formData.append("query", document.getElementById("query").value);
+
+            const pdfFile = document.getElementById("pdf").files[0];
+            if (pdfFile) {
+                formData.append("pdf", pdfFile);
+            }
+
+            const responseBox = document.getElementById("answerText");
+            responseBox.textContent = "⏳ Processing... please wait";
+
+            try {
+                // Send request to backend /chat
+                const response = await fetch("/chat", {
+                    method: "POST",
+                    body: formData
+                });
+
+                // Try to parse JSON response
+                const data = await response.json();
+
+                if (response.ok) {
+                    //  Success case → show answer
+                    responseBox.textContent = data.answer || "No response found.";
+                } else {
+                    //  Backend error but still JSON → show error message
+                    responseBox.textContent = "⚠️ Error: " + (data.error || "Unknown error");
+                }
+
+            } catch (error) {
+                //  Network / parsing error → show fallback
+                responseBox.textContent = "❌ Network/Parsing Error: " + error;
+            }
+        });
+    </script>
+</body>
+</html>

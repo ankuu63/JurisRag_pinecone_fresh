@@ -1,0 +1,28 @@
+#python verison 3.13.5
+
+#langchain core
+langchain==0.3.27
+langchain-core==0.3.75
+langchain-community==0.3.29
+langchain_experimental==0.3.4
+langchain-pinecone
+pinecone-client
+langchain-cohere
+
+
+
+#openai and huggingface
+langchain-openai
+openai
+
+
+python-dotenv
+
+
+
+pypdf==6.0.0
+
+
+fastapi==0.116.1
+python-multipart   ##parsing form data to with files
+uvicorn[standard]==0.35.0
