@@ -69,9 +69,7 @@ Input: Retrieved document chunks
 Output: Ranked list of chunks fed to LLM
 ## ARCHITECTURE
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
+![image alt](https://github.com/ankuu63/JurisRag_pinecone_fresh/blob/028df29bf6f7c921619df6cf0cc95921dabb5bc0/dia.drawio.png)
 
 
 ## Quick Start
